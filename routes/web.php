@@ -14,6 +14,9 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ShopDetailController;
 use App\Http\Controllers\FruitController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\VNPayController;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,12 +28,15 @@ use App\Http\Controllers\CartController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-    Route::view('/', 'layout/index')->name('home');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/sign-in', [AuthController::class, 'index'])->name('auth');
     Route::post('/sign-in', [AuthController::class, 'login']);
     Route::get('/register', [AuthController::class, 'create'])->name('registation');
     Route::post('/register', [AuthController::class, 'register']);
     Route::get('/verify/{verify_key}', [AuthController::class, 'verify']);
+
+    // Search
+    Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 
 Route::middleware(['auth'])->group(function() {
@@ -65,6 +71,23 @@ Route::middleware(['auth'])->group(function() {
         Route::delete('/delete-cart/{id}', [CartController::class, 'deleteCart'])->name('delete.cart');
         Route::get('/billings', [BillingsController::class, 'showProceed'])->name('show.proceed');
         Route::post('/billings', [BillingsController::class, 'addProceed'])->name('add.proceed');
+
+        
+
+        
+    });
+
+    Route::group(['prefix' => 'payment'], function () {
+       
+        // Thanh toán VNPay
+        Route::post('/', [VNPayController::class, 'createPayment'])->name('payment.create');
+        Route::get('/callback', [VNPayController::class, 'callback'])->name('payment.callback');
+
+        Route::get('/success', [VNPayController::class, 'paymentSuccess'])->name('payment.success');
+        
+        Route::get('/failed', function() {
+            return 'failed';
+        })->name('payment.failed'); 
     });
 
    

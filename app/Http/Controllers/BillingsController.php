@@ -45,6 +45,6 @@ class BillingsController extends Controller
             'payment_method_id' => $request->input('payment_method')
         ]);
 
-        return redirect()->back()->with('success', 'Order added successfully!');
+        return redirect()->route('payment.create');
     }
 }

@@ -85,13 +85,13 @@
                         </div>
                         <div class="d-flex m-3 me-0">
                             <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
-                            <a href="#" class="position-relative me-4 my-auto">
+                            <a href="{{ route('cart.index') }}" id="total_cart" class="position-relative me-4 my-auto">
                                 <i class="fa fa-shopping-bag fa-2x"></i>
-                                <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
+                                <span id="cart-quantity" class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">{{ $totalQuantity }}</span>
                             </a>
-                            {{-- <a href="#" class="my-auto">
+                            <a href="#" class="my-auto">
                                 <i class="fas fa-user fa-2x"></i>
-                            </a> --}}
+                            </a>
                         </div>
                     </div>
                 </nav>
@@ -108,12 +108,13 @@
                         <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body d-flex align-items-center">
+                    <div class="d-flex align-items-center">
                         <div class="input-group w-75 mx-auto d-flex">
-                            <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
-                            <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                            <input type="search" class="form-control p-3" id="search-input" placeholder="keywords" aria-describedby="search-icon-1">
+                            <button type="submit" id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></button>
                         </div>
                     </div>
+                    <div id="search-results" class="list-group w-75 mx-auto d-flex mt-2"></div>
                 </div>
             </div>
         </div>
@@ -1243,23 +1244,26 @@
 
         <script>
             $(document).ready(function () {
-                //     $('.chat-bubble').click(function(){
-                //     $('.chat-box').toggleClass('hide');
-                //     $('.chat-bubble').toggleClass('chat-bubble-hover');
-                // })
-
-                // $('.chat-bubble').click(function(){
-                //         const chatBox = document.querySelector('.chat-box');
-                //         if (chatBox.classList.contains('hide')) {
-                //             chatBox.classList.remove('hide');
-                //             chatBox.classList.add('show');
-                //         } else {
-                //             chatBox.classList.remove('show');
-                //             chatBox.classList.add('hide');
-                //         }
-                //     })
-
-                
+                $('#search-input').on('keyup', function() {
+                    let query = $(this).val();
+                    let result = $('#search-results');
+                    result.empty();
+                    $.ajax({
+                        type: "GET",
+                        url: "/search",
+                        data: { query: query },
+                        success: function (response) {  
+                            result.empty();
+                            if(response.length > 0) { 
+                                response.forEach(function(product) {
+                                    result.append('<a href="{{ route('fruit.show')}}' + '" class="list-group-item list-group-item-action">' + product.name + '</a>');
+                                });
+                            }  else {
+                                result.append('<div class="list-group-item">No products found</div>');
+                            }
+                        }
+                    });
+                })
             });
         
         </script>

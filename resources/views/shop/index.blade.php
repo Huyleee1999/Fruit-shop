@@ -46,11 +46,19 @@
                         <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">123 Street, New York</a></small>
                         <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">Email@Example.com</a></small>
                     </div>
-                    <div class="top-link pe-2">
-                        <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
-                        <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
-                        <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
-                    </div>
+                    @if(!Auth::check())
+                        <div class="top-link pe-2">
+                            <a href="{{ route('auth') }}" class="text-white"><small class="text-white mx-2">Log In</small>/</a>
+                            <a href="{{ route('registation') }}" class="text-white"><small class="text-white ms-2">Register</small></a>
+                        </div>
+                    @else
+                        <div class="top-info">
+                            <small class="me-3">
+                                <img src="{{ asset('picture/accounts/' . Auth::user()->image) }}" style="width: 20px;" alt="">
+                                <a href="#" class="text-white">{{ Auth::user()->fullname }} </a>
+                            </small>
+                        </div>
+                    @endif
                 </div>
             </div>
             <div class="container px-0">

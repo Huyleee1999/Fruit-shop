@@ -48,11 +48,19 @@
                     <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">123 Street, New York</a></small>
                     <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">Email@Example.com</a></small>
                 </div>
-                <div class="top-link pe-2">
-                    <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
-                    <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
-                    <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
-                </div>
+                @if(!Auth::check())
+                        <div class="top-link pe-2">
+                            <a href="{{ route('auth') }}" class="text-white"><small class="text-white mx-2">Log In</small>/</a>
+                            <a href="{{ route('registation') }}" class="text-white"><small class="text-white ms-2">Register</small></a>
+                        </div>
+                @else
+                    <div class="top-info">
+                        <small class="me-3">
+                            <img src="{{ asset('picture/accounts/' . Auth::user()->image) }}" style="width: 20px;" alt="">
+                            <a href="#" class="text-white">{{ Auth::user()->fullname }} </a>
+                        </small>
+                    </div>
+                @endif
             </div>
         </div>
         <div class="container px-0">
@@ -145,7 +153,7 @@
                     {{ session('success') }}
                 </div>
             @endif
-            <form action="{{route('add.proceed')}}"  method="POST">
+            <form action="{{route('payment.create')}}"  method="POST">
             @csrf
                 <div class="row g-5">
                     <div class="col-md-12 col-lg-6 col-xl-7">
@@ -200,7 +208,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                        $total = 0;   
+                                    @endphp
                                     @foreach ($data as $item)
+                                    @php
+                                        $total += $item->price * $item->quantity;
+                                    @endphp
                                         <tr>
                                             <td scope="row">
                                                 <div class="d-flex align-items-center">
@@ -211,26 +225,39 @@
                                                 <p class="mb-0 mt-4">{{ $item->name }}</p>
                                             </td>
                                             <td>
-                                                <p class="item-price mb-0 mt-4">{{ number_format($item->price, 3) }}</p>
+                                                <p class="item-price mb-0 mt-4">{{ number_format($item->price, 0) }}</p>
                                             </td>
                                             <td>
-                                                <div class="input-group quantity mt-4" style="width: 100px;">
+                                                <p class="text-center mb-0 mt-4">{{ $item->quantity }}</p>
+
+                                                {{-- <div class="input-group quantity mt-4" style="width: 100px;">
+                                                    
                                                     <input type="number" class="quantity-input form-control form-control-sm text-center border-0" min="0" value="{{ $item->quantity }}">
-                                                </div>
+                                                </div> --}}
                                             </td>
                                             <td>
-                                                <p class="mb-0 mt-4 total-price">{{ number_format($item->price * $item->quantity, 3) }}</p>
+                                                <p class="mb-0 mt-4 total-price">{{ number_format($item->price * $item->quantity, 0) }}</p>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
+                                <tfoot>
+                                    <input type="hidden" name="total" value="{{ $total }}">
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th>Total</th>
+                                        <th></th>
+                                        <th>{{ number_format($total, 0) }}</th>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                         @foreach ($payment_method as $item)
                             <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-3">
                                 <div class="col-12">
                                     <div class="form-check text-start my-3">
-                                        <input type="radio" class="form-check-input bg-primary border-0" id="payment-{{ $item->id }}" name="payment_method" value="{{ $item->id }}">
+                                        <input type="radio" class="form-check-input bg-primary border-0" id="payment-{{ $item->id }}" name="payment_method" value="{{ $item->id }} {{ $item->name === 'VNPay' ? 'data-vnpay' : '' }}">
                                         <label class="form-check-label" for="payment-{{ $item->id }}">{{ $item->name }}</label>
                                     </div>
                                     <img src="{{ asset('picture/accounts/' . $item->image) }}" class="img-fluid" style="max-width: 100px;" alt="{{ $item->name }}">
@@ -363,12 +390,16 @@
         $(document).ready(function() {
             $('#citySelect').select2();
             $(".js-example-responsive").select2({
-                width: 'resolve' // need to override the changed default
+                width: 'resolve' 
             });
 
-           
+            // Thanh Toán vnpay
+            $('input[name="payment_method"]').change(function() {
+                if ($(this).data('vnpay') !== undefined) {
+                    $('form').submit();
+                }
+            });
         });
     </script>
     </body>
-
 </html>
