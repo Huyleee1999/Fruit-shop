@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class ShopDetailController extends Controller
 {
-    public function index($id) {
-        $data = Fruits::find($id);
+    // public function index($id) {
+    //     $data = Fruits::find($id);
 
-        return view('shop-detail.index', compact($data));
-    }
+    //     return view('shop-detail.index', compact($data));
+    // }
 }

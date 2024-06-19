@@ -158,6 +158,9 @@
                                 <th>Name</th>
                                 <th>Description</th>
                                 <th>Price</th>
+                                <th>Origin</th>
+                                <th>Weight</th>
+                                <th>Quality</th>
                                 <th>Image</th>
                                 <th>Action</th>
                             </tr>
@@ -167,6 +170,9 @@
                                 <th width="5%">Name</th>
                                 <th>Description</th>
                                 <th width="5%">Price</th>
+                                <th width="5%">Origin</th>
+                                <th width="5%">Weight (kg)</th>
+                                <th width="5%">Quality</th>
                                 <th width="5%">Image</th>
                                 <th width="15%">Action</th>
                             </tr>
@@ -175,8 +181,11 @@
                             @foreach ($data as $item)
                                 <tr>
                                     <td>{{ $item->name }}</td>
-                                    <td>{{ $item->description }}</td>
+                                    <td>{!! $item->description !!}</td>
                                     <td>{{ $item->price }}</td>
+                                    <td>{{ $item->origin }}</td>
+                                    <td>{{ $item->weight }}</td>
+                                    <td>{{ $item->quality }}</td>
                                     <td>
                                         <img src="{{asset('uploads/fruits/'.$item->image)}}" width="50px" height="50px" alt="">
                                     </td>

@@ -141,12 +141,26 @@
                     </div>
                     <div class="form-group">
                         <label for="description">Description</label>
-                        <input type="text" class="form-control" id="description" placeholder="Type something..."
-                            name="description" required>
+                        <textarea name="description" id="description"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="price">Price</label>
                         <input type="number" class="form-control" id="price" placeholder="Type something..." name="price"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Origin</label>
+                        <input type="text" class="form-control" id="origin" placeholder="Type something..." name="origin"
+                            required>
+                    </div> 
+                    <div class="form-group">
+                        <label for="price">Weight (kg)</label>
+                        <input type="number" class="form-control" id="origin" placeholder="Type something..." name="weight"
+                            required>
+                    </div> 
+                    <div class="form-group">
+                        <label for="price">Quality</label>
+                        <input type="text" class="form-control" id="origin" placeholder="Type something..." name="quality"
                             required>
                     </div>
 
@@ -161,4 +175,28 @@
             </div>
         </div>
     </div>
+
+    <style>
+        .ck-content {
+            width: 100%; 
+            min-height: 300px; 
+        }
+    </style>
+
 @endsection
+
+@section('javascript')
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+    <script>
+        $(document).ready(function() {
+            ClassicEditor
+                .create(document.querySelector('#description'))
+                .catch(error => {
+                    console.error(error);
+                });
+        });
+    </script> 
+@endsection
+
+
+

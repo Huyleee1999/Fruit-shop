@@ -17,6 +17,8 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\VNPayController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\CalendarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,30 +42,38 @@ use App\Http\Controllers\HomeController;
 
 
 Route::middleware(['auth'])->group(function() {
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin')->middleware(['userAccess:admin']);
-
-    Route::get('/list-users', [ListUsersController::class, 'index'])->name('list-users');
-    Route::get('/create-user', [ListUsersController::class, 'create'])->name('create-user');
-    Route::get('/edit-user/{id}', [ListUsersController::class, 'edit'])->name('edit-user');
-    Route::post('/delete-user/{id}', [ListUsersController::class, 'delete']);
-
-    Route::get('/user-management', [UserManageController::class, 'index'])->name('user-management');
-
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-    Route::get('/chat', [ChatController::class, 'showChat'])->name('chat.show');
-    Route::post('/chat/message', [ChatController::class, 'messageReceived'])->name('chat.message');
+    Route::group(['prefix' => 'admin'], function() {
+        Route::get('/', [AdminController::class, 'index'])->name('admin')->middleware(['userAccess:admin']);
+        Route::get('/list-users', [ListUsersController::class, 'index'])->name('list-users');
+        Route::get('/create-user', [ListUsersController::class, 'create'])->name('create-user');
+        Route::get('/edit-user/{id}', [ListUsersController::class, 'edit'])->name('edit-user');
+        Route::post('/delete-user/{id}', [ListUsersController::class, 'delete']);
     
-    Route::group(['prefix' => 'fruit'], function () {
-        Route::get('/show', [FruitController::class, 'showAddFruit'])->name('fruit.show');
-        Route::post('/add', [FruitController::class, 'addFruit'])->name('fruit.add');
-        Route::get('/', [FruitController::class, 'index'])->name('fruit.index');
-        Route::delete('/delete/{id}', [FruitController::class, 'delete'])->name('fruit.delete');
+        Route::get('/user-management', [UserManageController::class, 'index'])->name('user-management');
+    
+        Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    
+        Route::get('/chat', [ChatController::class, 'showChat'])->name('chat.show');
+        Route::post('/chat/message', [ChatController::class, 'messageReceived'])->name('chat.message');
+        
+        Route::group(['prefix' => 'fruit'], function () {
+            Route::get('/show', [FruitController::class, 'showAddFruit'])->name('fruit.show');
+            Route::post('/add', [FruitController::class, 'addFruit'])->name('fruit.add');
+            Route::get('/', [FruitController::class, 'index'])->name('fruit.index');
+            Route::delete('/delete/{id}', [FruitController::class, 'delete'])->name('fruit.delete');
+
+        Route::group(['prefix' => 'calendar'], function() {
+            Route::get('/', [CalendarController::class, 'index'])->name('calendar.index');
+            Route::post('/store', [CalendarController::class, 'store'])->name('calendar.store')->middleware('web');
+        });
+    });
+
+   
     });
 
     Route::group(['prefix' => 'shop'], function () {
         Route::get('/', [ShopController::class, 'index'])->name('shop.index');
-        Route::get('/detail/{id}', [ShopDetailController::class, 'index'])->name('shopdetail.index');
+        Route::get('/detail/{id}', [ShopController::class, 'detail'])->name('shopdetail.index');
         Route::get('/cart', [CartController::class, 'cart'])->name('cart.index');
         Route::get('/add-cart/{id}', [CartController::class, 'addCart'])->name('cart.show.add');
         Route::post('/add-cart/{id}', [CartController::class, 'addToCart'])->name('cart.add');
@@ -71,10 +81,6 @@ Route::middleware(['auth'])->group(function() {
         Route::delete('/delete-cart/{id}', [CartController::class, 'deleteCart'])->name('delete.cart');
         Route::get('/billings', [BillingsController::class, 'showProceed'])->name('show.proceed');
         Route::post('/billings', [BillingsController::class, 'addProceed'])->name('add.proceed');
-
-        
-
-        
     });
 
     Route::group(['prefix' => 'payment'], function () {
@@ -90,8 +96,12 @@ Route::middleware(['auth'])->group(function() {
         })->name('payment.failed'); 
     });
 
-   
 
+    Route::group(['prefix' => 'contact'], function() {
+        Route::get('/', [ContactController::class, 'index'])->name('contact.index');
+    });
+
+   
 });
 
 

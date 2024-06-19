@@ -15,6 +15,9 @@ class Fruits extends Model
         'name',
         'description',
         'price',
-        'image'
+        'image',
+        'origin',
+        'weight',
+        'quality'
     ];
 }

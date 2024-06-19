@@ -81,7 +81,7 @@
                                     <a href="404.html" class="dropdown-item">404 Page</a>
                                 </div>
                             </div>
-                            <a href="contact.html" class="nav-item nav-link">Contact</a>
+                            <a href="{{ route('contact.index') }}" class="nav-item nav-link">Contact</a>
                         </div>
                         <div class="d-flex m-3 me-0">
                             <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
@@ -311,20 +311,23 @@
                                         @foreach ($data as $item)
                                             <div class="col-md-6 col-lg-6 col-xl-4">
                                                 <div class="rounded position-relative fruite-item">
-                                                    {{-- <a href="{{ route('shopdetail.index', ['id' => $item->id]) }}"> --}}
+                                                    <a href="{{ route('shopdetail.index', ['id' => $item->id]) }}" >
                                                         <div class="fruite-img">
-                                                            <img src="{{ asset('uploads/fruits/' . $item->image) }}" class="img-fluid w-100 rounded-top" alt="">
+                                                            <img src="{{ asset('uploads/fruits/' . $item->image) }}" class="img-fluid w-100 rounded-top"  style="height: 366px; object-fit: cover"  alt="">
                                                         </div>
-                                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
-                                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                    </a> 
+                                                    <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
+                                                    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                        <a href="{{ route('shopdetail.index', ['id' => $item->id]) }}">
                                                             <h4>{{ $item->name }}</h4>
-                                                            <p>{{ $item->description }}</p>
-                                                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                                                <p class="text-dark fs-5 fw-bold mb-0">{{ $item->price }}</p>
-                                                                <button href="#" data-fruit-id="{{ $item->id }}" class="btn-add-to-cart btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</button>
-                                                            </div>
+                                                        </a> 
+                                                        <p>{!! Str::limit($item->description, 30) !!}</p>
+                                                        <div class="d-flex justify-content-between flex-lg-wrap">
+                                                            <p class="text-dark fs-5 fw-bold mb-0">{{ $item->price }}</p>
+                                                            <button href="#" data-fruit-id="{{ $item->id }}" class="btn-add-to-cart btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</button>
                                                         </div>
-                                                    {{-- </a> --}} 
+                                                    </div>
+                                                    
                                                 </div>
                                             </div>
                                         @endforeach

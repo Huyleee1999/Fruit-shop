@@ -22,6 +22,12 @@
 
     <link href="{{ asset('dashboard/vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/css/tempusdominus-bootstrap-4.min.css" />
+
+    <link rel="stylesheet" href="{{ asset('css/toastr.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/toastr.debug.css') }}">
 
 </head>
 
@@ -305,6 +311,7 @@
         </div>
     </div>
 
+
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('dashboard/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('dashboard/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -329,6 +336,8 @@
     <!-- Page level custom scripts -->
     <script src="{{ asset('dashboard/js/demo/datatables-demo.js') }}"></script>
 
+    @yield('javascript')
+    
 </body>
 
 </html>

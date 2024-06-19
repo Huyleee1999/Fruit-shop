@@ -24,7 +24,10 @@ class FruitController extends Controller
             'name' => 'required | string',
             'description' => 'required',
             'price' => 'required | numeric',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif'
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'origin' => 'required',
+            'weight' => 'required',
+            'quality' => 'required',
         ]);
 
         if ($request->hasFile('image')) {
@@ -33,11 +36,18 @@ class FruitController extends Controller
             $file->move(public_path('uploads/fruits'), $filename);
         }
 
+        $description = $request->input('description');
+        $allowed_tags = '<a><em><ul><ol><li>';
+        $descriptions = strip_tags($allowed_tags, $description);
+
         Fruits::create([
             'name' => $request->name,
-            'description' => $request->description,
+            'description' => $descriptions,
             'price' => $request->price,
-            'image' => $filename
+            'image' => $filename,
+            'origin' => $request->origin,
+            'weight' => $request->weight,
+            'quality' => $request->quality,
         ]);
 
         return redirect()->back()->with('success', 'Fruit added successfully!');
@@ -45,7 +55,7 @@ class FruitController extends Controller
 
 
     public function delete($id) {
-        $data = Fruits::find($id)->first();
+        $data = Fruits::find($id);
 
         if($data) {
             $data->delete();
