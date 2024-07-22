@@ -19,6 +19,10 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\CategoriesController;
+use PhpParser\Node\Expr\BinaryOp\NotEqual;
+use App\Http\Controllers\NoteController;
+use App\Http\Controllers\GoogleLoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +40,9 @@ use App\Http\Controllers\CalendarController;
     Route::get('/register', [AuthController::class, 'create'])->name('registation');
     Route::post('/register', [AuthController::class, 'register']);
     Route::get('/verify/{verify_key}', [AuthController::class, 'verify']);
+
+    Route::get('/google/redirect', [GoogleLoginController::class, 'redirectToGoogle'])->name('google.redirect');
+    Route::get('/google/callback', [GoogleLoginController::class, 'handleGoogleCallback'])->name('google.callback');
 
     // Search
     Route::get('/search', [SearchController::class, 'search'])->name('search');
@@ -66,9 +73,18 @@ Route::middleware(['auth'])->group(function() {
             Route::get('/', [CalendarController::class, 'index'])->name('calendar.index');
             Route::post('/store', [CalendarController::class, 'store'])->name('calendar.store')->middleware('web');
         });
-    });
 
-   
+        Route::group(['prefix' => 'category'], function() {
+            Route::get('/', [CategoriesController::class, 'index'])->name('category.index');
+            Route::get('/add', [CategoriesController::class, 'show'])->name('category.show');
+            Route::post('/add', [CategoriesController::class, 'addCategory'])->name('category.add');
+        });
+
+        Route::group(['prefix' => 'note'], function() {
+            Route::get('/', [NoteController::class, 'index'])->name('note.index');
+            Route::post('/add', [NoteController::class, 'addNote'])->name('note.add');
+        });
+    }); 
     });
 
     Route::group(['prefix' => 'shop'], function () {
@@ -101,7 +117,6 @@ Route::middleware(['auth'])->group(function() {
         Route::get('/', [ContactController::class, 'index'])->name('contact.index');
     });
 
-   
 });
 
 

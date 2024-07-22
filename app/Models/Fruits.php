@@ -20,4 +20,8 @@ class Fruits extends Model
         'weight',
         'quality'
     ];
+
+    public function cartItems() {
+        return $this->hasMany(CartItem::class, 'fruit_id');
+    }
 }

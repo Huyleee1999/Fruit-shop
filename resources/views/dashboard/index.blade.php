@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>HyMuy - Dashboard</title>
 
@@ -25,19 +26,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/css/tempusdominus-bootstrap-4.min.css" />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@icon/themify-icons@1.0.1-alpha.3/themify-icons.min.css">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+    
     <link rel="stylesheet" href="{{ asset('css/toastr.css') }}">
     <link rel="stylesheet" href="{{ asset('css/toastr.debug.css') }}">
+    <link rel="stylesheet" href="{{ asset('main_source/css/style.css') }}">
+
+    
 
 </head>
 
 <body id="page-top">
-
     <!-- Page Wrapper -->
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
@@ -48,6 +54,7 @@
             </a>
 
             @yield('navitem')
+
 
         </ul>
         <!-- End of Sidebar -->
@@ -335,6 +342,7 @@
 
     <!-- Page level custom scripts -->
     <script src="{{ asset('dashboard/js/demo/datatables-demo.js') }}"></script>
+    <script type="module" src="{{ asset('js/config/index.js') }}"></script>
 
     @yield('javascript')
     

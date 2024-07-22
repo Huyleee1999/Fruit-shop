@@ -91,8 +91,8 @@
 							<i class="fa fa-facebook-f" aria-hidden="true"></i>
 						</a>
 
-						<a href="#" class="login100-form-social-item flex-c-m bg2 m-r-5">
-							<i class="fa fa-twitter" aria-hidden="true"></i>
+						<a href="{{ route('google.redirect') }}" class="login100-form-social-item flex-c-m bg2 m-r-5">
+							<i class="fa fa-google" aria-hidden="true"></i>
 						</a>
 					</div>
 				</form>
@@ -105,8 +105,6 @@
 	
 	
 
-	
-	
 	<script src="{{ asset('auth/vendor/jquery/jquery-3.2.1.min.js') }}"></script>
 	<script src="{{ asset('auth/vendor/animsition/js/animsition.min.js')}}"></script>
 	<script src="{{ asset('auth/vendor/bootstrap/js/popper.js') }}"></script>

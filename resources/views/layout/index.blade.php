@@ -3,7 +3,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Fruitables - Vegetable Website Template</title>
+        <title>Fruitables - Vegetable Store</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -43,8 +43,8 @@
             <div class="container topbar bg-primary d-none d-lg-block">
                 <div class="d-flex justify-content-between">
                     <div class="top-info ps-2">
-                        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">123 Street, New York</a></small>
-                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">Email@Example.com</a></small>
+                        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">629/18L CMT8 P.15 Q.10 Tp.HCM</a></small>
+                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">junhuy199931@gmail.com</a></small>
                     </div>
                     @if(!Auth::check())
                         <div class="top-link pe-2">
@@ -89,9 +89,9 @@
                                 <i class="fa fa-shopping-bag fa-2x"></i>
                                 <span id="cart-quantity" class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">{{ $totalQuantity }}</span>
                             </a>
-                            <a href="#" class="my-auto">
+                            {{-- <a href="#" class="my-auto">
                                 <i class="fas fa-user fa-2x"></i>
-                            </a>
+                            </a> --}}
                         </div>
                     </div>
                 </nav>

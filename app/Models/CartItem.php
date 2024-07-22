@@ -16,9 +16,8 @@ class CartItem extends Model
         return $this->belongsTo(Cart::class);
     }
 
-    public function fruit()
-    {
-        return $this->belongsTo(Fruits::class);
+    public function fruit() {
+        return $this->belongsTo(Fruits::class, 'fruit_id');
     }
 
     public function billings()

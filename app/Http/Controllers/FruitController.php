@@ -57,7 +57,9 @@ class FruitController extends Controller
     public function delete($id) {
         $data = Fruits::find($id);
 
+        
         if($data) {
+            $data->cartItems()->delete();
             $data->delete();
             return response()->json(['status' => true]);
         }

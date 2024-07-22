@@ -54,11 +54,26 @@
         </div>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#category"
+            aria-expanded="true" aria-controls="collapseUtilities">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>Category</span>
+        </a>
+        <div id="category" class="collapse" aria-labelledby="headingUtilities"
+            data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('category.index') }}">List Category</a>
+                <a class="collapse-item" href="{{ route('category.show') }}">Show Category</a>
+            </div>
+        </div>
+    </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider">
 
     <!-- Heading -->
-    <div class="sidebar-heading">
+    {{-- <div class="sidebar-heading">
         Addons
     </div>
 
@@ -81,7 +96,7 @@
                 <a class="collapse-item" href="blank.html">Blank Page</a>
             </div>
         </div>
-    </li>
+    </li> --}}
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">

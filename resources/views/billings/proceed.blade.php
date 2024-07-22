@@ -391,9 +391,6 @@
     <script>
         $(document).ready(function() {
             $('#citySelect').select2();
-            $(".js-example-responsive").select2({
-                width: 'resolve' 
-            });
 
             // Thanh Toán vnpay
             $('input[name="payment_method"]').change(function() {
